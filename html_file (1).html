@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bounty Hunter Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="login-container">
+        <div class="login-box glass-card">
+            <h1 class="logo">🎯 BOUNTY PORTAL</h1>
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Enter Username" required>
+            </div>
+            <div class="input-group">
+                <input type="text" id="userid" placeholder="Enter User ID" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Enter Password" required>
+            </div>
+            <div class="error-message" id="loginError">Invalid credentials! Please try again.</div>
+            <button class="login-btn" onclick="handleLogin()" type="button">🚀 ACCESS PORTAL</button>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">👤</div>
+                    <div>
+                        <div id="displayName">Hunter</div>
+                        <div style="font-size: 12px; opacity: 0.7;" id="userLevel">Level 1</div>
+                    </div>
+                </div>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="active" onclick="showPage('home')">🏠 Home</li>
+                <li onclick="showPage('settings')">⚙️ Settings</li>
+                <li onclick="showPage('points')">💎 Points</li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="top-bar">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <h2 id="pageTitle">Bounty Hunter Portal</h2>
+                <div>Welcome, <span id="topUsername">Hunter</span></div>
+            </div>
+
+            <div class="content-area">
+                <!-- Instructions Page (Initial) -->
+                <div id="instructionsPage" class="instructions">
+                    <h1>🎯 Welcome, Bounty Hunter!</h1>
+                    <div class="instruction-card glass-card">
+                        <h3>📋 Go to this doc and solve the quest</h3>
+                        <p>Your mission awaits in the documentation. Study it carefully.</p>
+                    </div>
+                    <div class="instruction-card glass-card">
+                        <h3>🔓 Next clue will unlock</h3>
+                        <p>Each completed bounty reveals the path to the next challenge.</p>
+                    </div>
+                    <div class="instruction-card glass-card">
+                        <h3>🏆 In the end you will get a reward</h3>
+                        <p>Complete all bounties to claim your ultimate prize.</p>
+                    </div>
+                    <div class="instruction-card glass-card">
+                        <h3>🍀 Best of luck, Bounty Hunters!</h3>
+                        <p>May your skills serve you well on this journey.</p>
+                    </div>
+                    <div class="instruction-card glass-card">
+                        <h2>⏰ Your time starts now!</h2>
+                        <div class="timer-display" id="timerDisplay">24:00:00</div>
+                        <div class="key-input-section">
+                            <h4>🔑 Enter Key to Unlock Reward</h4>
+                            <input type="text" class="key-input" id="bountyKey" placeholder="Enter your bounty key">
+                            <button class="submit-key-btn" onclick="submitKey()">Submit Key</button>
+                            <div class="success-message" id="keySuccess">Key accepted! Your reward link will be generated.</div>
+                            <div class="error-message" id="keyError">Invalid key or time expired!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Home Page -->
+                <div id="homePage" style="display: none;">
+                    <h2>🏠 Dashboard Overview</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card glass-card">
+                            <div class="stat-number" id="completedBounties">0</div>
+                            <h3>Completed Bounties</h3>
+                            <p>Total missions accomplished</p>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <div class="stat-number" id="activeBounties">1</div>
+                            <h3>Active Bounties</h3>
+                            <p>Current ongoing missions</p>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <div class="stat-number" id="totalPoints">0</div>
+                            <h3>Total Points</h3>
+                            <p>Your bounty score</p>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <div class="stat-number" id="userRank">#∞</div>
+                            <h3>Global Rank</h3>
+                            <p>Your position among hunters</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div id="settingsPage" style="display: none;">
+                    <h2>⚙️ Account Settings</h2>
+                    <div class="settings-section glass-card">
+                        <h3>👤 Profile Information</h3>
+                        <input type="text" class="settings-input" id="newDisplayName" placeholder="Display Name">
+                        <br>
+                        <label for="avatarUpload" class="file-input-label">📸 Upload Avatar</label>
+                        <input type="file" id="avatarUpload" class="file-input" accept="image/*" onchange="uploadAvatar()">
+                        <br>
+                        <button class="save-btn" onclick="saveSettings()">💾 Save Changes</button>
+                        <div class="success-message" id="settingsSuccess">Settings saved successfully!</div>
+                    </div>
+                </div>
+
+                <!-- Points Page -->
+                <div id="pointsPage" style="display: none;">
+                    <h2>💎 Bounty Points</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card glass-card">
+                            <div class="stat-number" id="currentPoints">0</div>
+                            <h3>Current Points</h3>
+                            <p>Your active bounty points</p>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <div class="stat-number" id="lifetimePoints">0</div>
+                            <h3>Lifetime Points</h3>
+                            <p>Total points earned</p>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <div class="stat-number" id="pointsThisMonth">0</div>
+                            <h3>This Month</h3>
+                            <p>Points earned this month</p>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <div class="stat-number" id="averagePerBounty">0</div>
+                            <h3>Average Per Bounty</h3>
+                            <p>Points per completed mission</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
